@@ -1,0 +1,61 @@
+form {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+label {
+  display: block;
+}
+
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  margin: 0.6rem 0;
+  cursor: pointer;
+}
+
+input:not([type='number']),
+textarea {
+  width: 100%;
+  margin-top: 0.1rem;
+  padding: 0.2rem;
+}
+
+.reverseField label,
+.expSet span {
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.fullName,
+.contact,
+.current {
+  display: flex;
+  gap: 1rem;
+}
+
+.fullName :nth-child(2),
+.fullName :nth-child(3) {
+  flex: 2;
+}
+
+.fullName :nth-child(4),
+.contact > *,
+.current > * {
+  flex: 1;
+}
+
+.expSet {
+  margin-bottom: 1.5rem;
+}
+
+.expSet > div:last-child > input {
+  margin: 0 0.5rem;
+}

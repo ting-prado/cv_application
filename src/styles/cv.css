@@ -1,0 +1,17 @@
+.cv {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr;
+}
+
+.leftCv {
+  background-color: peachpuff;
+}
+
+.rightCv {
+  background-color: papayawhip;
+}
+
+img {
+  width: 150px;
+  height: 150px;
+}
