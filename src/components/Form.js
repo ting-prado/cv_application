@@ -63,6 +63,7 @@ class Form extends Component {
           <label>Education</label>
           <div>{this.state.educ}</div>
           <button onClick={this.addEduc}>Add Education</button>
+          <label>Work Experience</label>
           <div>{this.state.works}</div>
           <button onClick={this.addWork}>Add Work Experience</button>
         </div>

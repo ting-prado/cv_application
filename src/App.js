@@ -31,20 +31,29 @@ class App extends Component {
             position: 'Junior Programmer',
             location: 'San Diego, California',
             fromYr: '2014',
-            toYr: '2018',
+            toYr: '2017',
+          },
+          {
+            company: 'A Better Company',
+            position: 'Web Developer',
+            location: 'Los Angeles, California',
+            fromYr: '2017',
+            toYr: '2022',
           },
         ],
       },
     };
 
-    this.state = {};
+    this.state = {
+      userInfo: defaultUser.userInfo,
+    };
   }
 
   render() {
     return (
       <div className="app">
         <Form addEduc={this.addEduc} />
-        <CV />
+        <CV userInfo={this.state.userInfo} />
       </div>
     );
   }

@@ -80,11 +80,18 @@ export class Desc extends Component {
   }
 }
 
+export class BlkLine extends Component {
+  render() {
+    return <hr />;
+  }
+}
+
 export class ExpInput extends Component {
   render() {
     const { names, institution, instInfo } = this.props;
     return (
       <fieldset className="expSet">
+        <BlkLine />
         <ReverseField name={names.inst} labelName={institution} />
         <ReverseField name="location" labelName="Location" />
         <ReverseField name={names.instInfo} labelName={instInfo} />
