@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import '../styles/form.css';
-import { ExpInput, Field, NameInput, Desc, ContactInput } from './FormParts';
+import { ExpInput, Field, ReverseField } from './FormParts';
 
 class Form extends Component {
   constructor(props) {
@@ -22,10 +22,10 @@ class Form extends Component {
         <ExpInput
           key={this.state.educ.length}
           names={{
-            inst: 'college',
+            inst: 'school',
             instInfo: 'degree',
           }}
-          institution="University/College"
+          institution="School/University"
           instInfo="Degree"
         />
       ),
@@ -50,15 +50,56 @@ class Form extends Component {
   };
 
   render() {
+    const { handleChange } = this.props;
     return (
-      <form>
-        <NameInput />
+      <form className="form">
+        <fieldset className="fullName">
+          <legend>Full Name</legend>
+          <ReverseField
+            handleChange={handleChange}
+            name="firstName"
+            labelName="First Name"
+          />
+          <ReverseField
+            handleChange={handleChange}
+            name="lastName"
+            labelName="Last Name"
+          />
+        </fieldset>
         <div className="current">
-          <Field name="curRole" labelName="Current Role" />
-          <Field name="curAddress" labelName="Current Address" />
+          <Field
+            handleChange={handleChange}
+            name="curRole"
+            labelName="Current Role"
+          />
+          <Field
+            handleChange={handleChange}
+            name="curAddress"
+            labelName="Current Address"
+          />
         </div>
-        <ContactInput />
-        <Desc name="profDesc" labelName="Profile Description" />
+        <fieldset className="contact">
+          <legend>Contact Information</legend>
+          <ReverseField
+            handleChange={handleChange}
+            name="email"
+            labelName="Email Address"
+          />
+          <ReverseField
+            handleChange={handleChange}
+            name="contactNum"
+            labelName="Contact Number"
+          />
+        </fieldset>
+        <div className="desc">
+          <label>Profile Description</label>
+          <textarea
+            rows="5"
+            onChange={handleChange}
+            name="desc"
+            placeholder="Profile Description"
+          ></textarea>
+        </div>
         <div>
           <label>Education</label>
           <div>{this.state.educ}</div>
