@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import Uniqid from 'uniqid';
 import { BlkLine } from './FormParts';
 import '../styles/cv.css';
 
@@ -33,15 +34,28 @@ class LeftInfo extends Component {
 
 class ListInfo extends Component {
   render() {
-    const { institute, instInfo, location, fromYr, toYr } = this.props;
+    const { institute, instInfo, location, from, to } = this.props;
+    let year;
+    switch (true) {
+      case from === '' && to !== '':
+        year = to;
+        break;
+      case from !== '' && to === '':
+        year = from;
+        break;
+      case from !== '' && to !== '':
+        year = `${from} - ${to}`;
+        break;
+      default:
+        year = '';
+        break;
+    }
     return (
       <div className="listInfo">
         <p>{institute}</p>
         <p>{location}</p>
         <p>{instInfo}</p>
-        <p>
-          {fromYr} - {toYr}
-        </p>
+        <p>{year}</p>
       </div>
     );
   }
@@ -53,34 +67,34 @@ class RightInfo extends Component {
     return (
       <div className="rightCv">
         <div>
-          <h3>Education</h3>
+          <h3>{userInfo.educs.length > 0 ? 'Education' : ''}</h3>
           <div>
-            {userInfo.educ.map((educInfo, index) => {
+            {userInfo.educs.map((educInfo) => {
               return (
                 <ListInfo
-                  key={index}
-                  institute={educInfo.college}
+                  key={Uniqid()}
+                  institute={educInfo.school}
                   instInfo={educInfo.degree}
                   location={educInfo.location}
-                  fromYr={educInfo.fromYr}
-                  toYr={educInfo.toYr}
+                  from={educInfo.from}
+                  to={educInfo.to}
                 />
               );
             })}
           </div>
         </div>
         <div>
-          <h3>Work Experience</h3>
+          <h3>{userInfo.works.length > 0 ? 'Work Experience' : ''}</h3>
           <div>
-            {userInfo.works.map((workInfo, index) => {
+            {userInfo.works.map((workInfo) => {
               return (
                 <ListInfo
-                  key={index}
+                  key={Uniqid()}
                   institute={workInfo.company}
                   instInfo={workInfo.position}
                   location={workInfo.location}
-                  fromYr={workInfo.fromYr}
-                  toYr={workInfo.toYr}
+                  from={workInfo.from}
+                  to={workInfo.to}
                 />
               );
             })}

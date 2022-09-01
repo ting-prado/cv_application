@@ -1,69 +1,159 @@
 import React, { Component } from 'react';
 import Form from './components/Form';
 import CV from './components/CV';
+import defaultUser from './defaultUser';
+import Header from './components/Header';
+import Uniqid from 'uniqid';
 import './styles/app.css';
 
 class App extends Component {
   constructor() {
     super();
 
-    const defaultUser = {
-      firstName: 'John',
-      lastName: 'Doe',
-      curRole: 'Software Developer',
-      curAddress: 'San Antonio, Texas',
-      email: 'samplemail@gmail.com',
-      contactNum: '09912345678',
-      desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur molestie dui tincidunt metus molestie fringilla. Curabitur at risus nisi. Morbi eu porta odio. Sed varius auctor augue, et elementum leo faucibus a. Fusce quis vulputate sem. Sed pharetra dolor ut diam maximus euismod.',
-      educ: [
-        {
-          school: 'Hawkins High School',
-          location: 'Hawkins, Indiana',
-          fromYr: '2006',
-          toYr: '2010',
-        },
-        {
-          school: 'Harvard University',
-          degree: 'Computer Science',
-          location: 'Cambridge, MA',
-          fromYr: '2010',
-          toYr: '2014',
-        },
-      ],
-      works: [
-        {
-          company: 'Sample Company',
-          position: 'Junior Programmer',
-          location: 'San Diego, California',
-          fromYr: '2014',
-          toYr: '2017',
-        },
-        {
-          company: 'A Better Company',
-          position: 'Web Developer',
-          location: 'Los Angeles, California',
-          fromYr: '2017',
-          toYr: '2022',
-        },
-      ],
-    };
-
     this.state = defaultUser;
 
     this.handleChange = this.handleChange.bind(this);
+    this.addInput = this.addInput.bind(this);
+    this.removeInput = this.removeInput.bind(this);
+    this.resetFields = this.resetFields.bind(this);
   }
 
   handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
+    const parent = e.target.parentNode.parentNode;
+    switch (parent.name) {
+      case 'educs':
+        // to change educs state, create a new array using map
+        // see if the current educ object has the same id as the parent component
+        // if true, change the value of the property within that object
+        // according to what's written in its corresponding input
+        // if not, retain the whole educ object
+        this.setState((prevState) => ({
+          educs: prevState.educs.map((educ) =>
+            educ.id === parent.id
+              ? { ...educ, [e.target.name]: e.target.value }
+              : educ
+          ),
+        }));
+        break;
+      case 'works':
+        this.setState((prevState) => ({
+          works: prevState.works.map((work) =>
+            work.id === parent.id
+              ? { ...work, [e.target.name]: e.target.value }
+              : work
+          ),
+        }));
+        break;
+      default:
+        this.setState({
+          [e.target.name]: e.target.value,
+        });
+        break;
+    }
+  };
+
+  addInput = async (e) => {
+    switch (e.target.name) {
+      case 'educs':
+        const newEduc = {
+          id: Uniqid(),
+          school: '',
+          degree: '',
+          location: '',
+          from: '',
+          to: '',
+        };
+        if (this.state.count.educs === 0) {
+          this.setState((prevState) => ({
+            educs: [].concat(newEduc),
+            count: {
+              ...prevState.count,
+              educs: this.state.count.educs + 1,
+            },
+          }));
+          break;
+        }
+        this.setState((prevState) => ({
+          educs: this.state.educs.concat(newEduc),
+          count: {
+            ...prevState.count,
+            educs: this.state.count.educs + 1,
+          },
+        }));
+        break;
+      case 'works':
+        const newWork = {
+          id: Uniqid(),
+          company: '',
+          position: '',
+          location: '',
+          from: '',
+          to: '',
+        };
+        if (this.state.count.works === 0) {
+          this.setState((prevState) => ({
+            works: [].concat(newWork),
+            count: {
+              ...prevState.count,
+              works: this.state.count.works + 1,
+            },
+          }));
+          break;
+        }
+        this.setState((prevState) => ({
+          works: this.state.works.concat(newWork),
+          count: {
+            ...prevState.count,
+            works: this.state.count.works + 1,
+          },
+        }));
+        break;
+      default:
+        break;
+    }
+  };
+
+  removeInput = async (e) => {
+    const parent = e.target.parentNode;
+    switch (parent.name) {
+      case 'educs':
+        this.setState({
+          educs: this.state.educs.filter((educ) => educ.id !== parent.id),
+        });
+        break;
+      case 'works':
+        this.setState({
+          works: this.state.works.filter((work) => work.id !== parent.id),
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  resetFields = () => {
+    const inputs = document.querySelectorAll('input, textarea');
+    inputs.forEach((input) => {
+      input.value = '';
     });
+    this.setState(defaultUser);
   };
 
   render() {
     return (
       <div className="app">
-        <Form handleChange={this.handleChange} addEduc={this.addEduc} />
-        <CV userInfo={this.state} />
+        <Header resetFields={this.resetFields} />
+        <main>
+          <Form
+            addInput={this.addInput}
+            handleChange={this.handleChange}
+            removeInput={this.removeInput}
+            addEduc={this.addEduc}
+            educs={this.state.educs}
+            works={this.state.works}
+          />
+          <CV userInfo={this.state} />
+        </main>
       </div>
     );
   }

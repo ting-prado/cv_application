@@ -3,12 +3,12 @@ import '../styles/form.css';
 
 export class ReverseField extends Component {
   render() {
-    const { handleChange, labelName, name } = this.props;
+    const { handleChange, labelName, name, type } = this.props;
     return (
       <div className="reverseField">
         <input
           onChange={handleChange}
-          type="text"
+          type={type}
           name={name}
           placeholder={labelName}
         />
@@ -20,13 +20,13 @@ export class ReverseField extends Component {
 
 export class Field extends Component {
   render() {
-    const { handleChange, labelName, name } = this.props;
+    const { handleChange, labelName, name, type } = this.props;
     return (
       <div className="field">
         <label>{labelName}</label>
         <input
           onChange={handleChange}
-          type="text"
+          type={type}
           name={name}
           placeholder={labelName}
         />
@@ -43,19 +43,49 @@ export class BlkLine extends Component {
 
 export class ExpInput extends Component {
   render() {
-    const { names, institution, instInfo } = this.props;
+    const {
+      name,
+      names,
+      institution,
+      instInfo,
+      id,
+      handleChange,
+      removeInput,
+    } = this.props;
     return (
-      <fieldset className="expSet">
+      <fieldset className="expSet" id={id} name={name}>
         <BlkLine />
-        <ReverseField name={names.inst} labelName={institution} />
-        <ReverseField name="location" labelName="Location" />
-        <ReverseField name={names.instInfo} labelName={instInfo} />
-        <div>
-          <span>From</span>
-          <input type="number" min="1900" max="2099" name="fromYr" />
-          <span>To</span>
-          <input type="number" min="1900" max="2099" name="toYr" />
-        </div>
+        <ReverseField
+          handleChange={handleChange}
+          name={names.inst}
+          type="text"
+          labelName={institution}
+        />
+        <ReverseField
+          handleChange={handleChange}
+          name="location"
+          type="text"
+          labelName="City/Country"
+        />
+        <ReverseField
+          handleChange={handleChange}
+          name={names.instInfo}
+          type="text"
+          labelName={instInfo}
+        />
+        <ReverseField
+          handleChange={handleChange}
+          type="text"
+          name="from"
+          labelName="From"
+        />
+        <ReverseField
+          handleChange={handleChange}
+          type="text"
+          name="to"
+          labelName="To"
+        />
+        <button onClick={removeInput}>Delete</button>
       </fieldset>
     );
   }
