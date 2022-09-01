@@ -3,6 +3,11 @@
   grid-template-columns: 1.5fr 2fr;
 }
 
+.leftCv,
+.rightCv {
+  padding: 1rem;
+}
+
 .leftCv {
   background-color: peachpuff;
 }

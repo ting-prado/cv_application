@@ -1,4 +1,4 @@
-form {
+.form {
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -27,7 +27,7 @@ hr {
   border: none;
 }
 
-input:not([type='number']),
+input,
 textarea {
   width: 100%;
   margin-top: 0.1rem;
@@ -37,7 +37,7 @@ textarea {
 .reverseField label,
 .expSet span {
   margin-top: 2px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
 }
 
@@ -53,12 +53,11 @@ textarea {
   flex: 2;
 }
 
-.fullName :nth-child(4),
 .contact > *,
 .current > * {
   flex: 1;
 }
 
-.expSet > div:last-of-type > input {
-  margin: 0 0.5rem;
+.expSet > * {
+  margin: 0.5rem;
 }
