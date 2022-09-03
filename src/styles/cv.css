@@ -1,22 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Quicksand:wght@300&family=Work+Sans:wght@300&display=swap');
+
 .cv {
   display: grid;
   grid-template-columns: 1.5fr 2fr;
+  min-width: 595px;
+  height: 842px;
+  color: rgb(36, 36, 36);
+  border: 2px solid antiquewhite;
+  --details-font: 'Quicksand', sans-serif;
+}
+
+.cv h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.cv hr {
+  margin-bottom: 0.8rem;
+  background: rgb(36, 36, 36);
+  height: 1px;
+}
+
+.leftCv div:not(.iconDiv, .cvContact) {
+  text-align: center;
+  width: 100%;
 }
 
 .leftCv,
 .rightCv {
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .leftCv {
-  background-color: peachpuff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #ffdeb4;
 }
 
 .rightCv {
-  background-color: papayawhip;
+  font-weight: normal;
+  background-color: #fffdeb;
 }
 
-img {
-  width: 150px;
-  height: 150px;
+.iconDiv {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.iconDiv img {
+  width: initial;
+  max-width: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: inherit;
+}
+
+.name {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.cvContact,
+.profile {
+  text-align: left;
+  padding: 0 5px;
+  font-size: 0.85rem;
+  font-family: var(--details-font);
+}
+
+.name,
+.role {
+  font-family: 'Work Sans', sans-serif;
+}
+
+.cvContact {
+  display: inline-block;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.cvContact p {
+  margin: 0.8rem 0;
+}
+
+.cvContact img {
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+}
+
+.profile {
+  margin: 1.2rem 0;
+}
+
+.listInfo {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  font-family: var(--details-font);
+}
+
+.listInfo > span {
+  flex: 1.5;
+}
+
+.listInfo > div {
+  flex: 2;
+}
+
+.cvEduc {
+  margin-top: 2rem;
 }

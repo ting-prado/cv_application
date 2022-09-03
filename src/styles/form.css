@@ -1,12 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&display=swap');
+
 .form {
+  background-color: #fffff0;
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1.2rem;
+  min-width: 390px;
+  border: 2px solid antiquewhite;
 }
 
-label {
+label,
+legend {
   display: block;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 fieldset {
@@ -15,9 +22,12 @@ fieldset {
   padding: 0;
 }
 
-button {
-  margin: 1rem 0;
+button,
+input[type='button'] {
   cursor: pointer;
+  width: 100%;
+  padding: 0.3rem;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 hr {
@@ -29,14 +39,25 @@ hr {
 
 input,
 textarea {
+  font-size: 0.8rem;
   width: 100%;
   margin-top: 0.1rem;
-  padding: 0.2rem;
+  padding: 0.3rem;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+input[type='file'] {
+  display: none;
+}
+
+.educ label,
+.works label {
+  margin: 1rem 0;
 }
 
 .reverseField label,
 .expSet span {
-  margin-top: 2px;
+  margin-top: 5px;
   font-size: 13px;
   font-weight: bold;
 }
@@ -58,6 +79,10 @@ textarea {
   flex: 1;
 }
 
-.expSet > * {
-  margin: 0.5rem;
+.expSet {
+  margin-bottom: 1rem;
+}
+
+.works {
+  margin-bottom: 1.5rem;
 }
