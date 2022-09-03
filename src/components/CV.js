@@ -8,24 +8,37 @@ class LeftInfo extends Component {
     const { userInfo } = this.props;
     return (
       <div className="leftCv">
-        <img src="Corporate-icon-300x300.png" alt="employee icon" />
-        <div>
-          <p>{userInfo.firstName}</p>
-          <p>{userInfo.lastName}</p>
-          <BlkLine />
-          <p>{userInfo.curRole}</p>
+        <div className="iconDiv">
+          <img src={userInfo.image} alt="user profile icon" />
         </div>
         <div>
-          <h3>Contact</h3>
+          <p className="name">{userInfo.firstName}</p>
+          <p className="name">{userInfo.lastName}</p>
           <BlkLine />
-          <p>{userInfo.contactNum}</p>
-          <p>{userInfo.email}</p>
-          <p>{userInfo.curAddress}</p>
+          <p className="role">{userInfo.curRole}</p>
         </div>
         <div>
-          <h3>Profile</h3>
+          <h3>CONTACT</h3>
           <BlkLine />
-          <p>{userInfo.desc}</p>
+          <div className="cvContact">
+            <p>
+              <img src="./icons/telephone.png" alt="telephone icon" />
+              {userInfo.contactNum}
+            </p>
+            <p>
+              <img src="./icons/email.png" alt="email icon" />
+              {userInfo.email}
+            </p>
+            <p>
+              <img src="./icons/location.png" alt="location icon" />
+              {userInfo.curAddress}
+            </p>
+          </div>
+        </div>
+        <div>
+          <h3>PROFILE</h3>
+          <BlkLine />
+          <p className="profile">{userInfo.desc}</p>
         </div>
       </div>
     );
@@ -52,10 +65,12 @@ class ListInfo extends Component {
     }
     return (
       <div className="listInfo">
-        <p>{institute}</p>
-        <p>{location}</p>
-        <p>{instInfo}</p>
-        <p>{year}</p>
+        <span>{year}</span>
+        <div>
+          <p>{institute}</p>
+          <p>{instInfo}</p>
+          <p>{location}</p>
+        </div>
       </div>
     );
   }
@@ -67,24 +82,14 @@ class RightInfo extends Component {
     return (
       <div className="rightCv">
         <div>
-          <h3>{userInfo.educs.length > 0 ? 'Education' : ''}</h3>
-          <div>
-            {userInfo.educs.map((educInfo) => {
-              return (
-                <ListInfo
-                  key={Uniqid()}
-                  institute={educInfo.school}
-                  instInfo={educInfo.degree}
-                  location={educInfo.location}
-                  from={educInfo.from}
-                  to={educInfo.to}
-                />
-              );
-            })}
-          </div>
-        </div>
-        <div>
-          <h3>{userInfo.works.length > 0 ? 'Work Experience' : ''}</h3>
+          {userInfo.works.length > 0 ? (
+            <div>
+              <h3>WORK EXPERIENCE</h3>
+              <BlkLine />
+            </div>
+          ) : (
+            ''
+          )}
           <div>
             {userInfo.works.map((workInfo) => {
               return (
@@ -95,6 +100,30 @@ class RightInfo extends Component {
                   location={workInfo.location}
                   from={workInfo.from}
                   to={workInfo.to}
+                />
+              );
+            })}
+          </div>
+        </div>
+        <div>
+          {userInfo.educs.length > 0 ? (
+            <div>
+              <h3 className="cvEduc">EDUCATION</h3>
+              <BlkLine />
+            </div>
+          ) : (
+            ''
+          )}
+          <div>
+            {userInfo.educs.map((educInfo) => {
+              return (
+                <ListInfo
+                  key={Uniqid()}
+                  institute={educInfo.school}
+                  instInfo={educInfo.degree}
+                  location={educInfo.location}
+                  from={educInfo.from}
+                  to={educInfo.to}
                 />
               );
             })}

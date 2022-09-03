@@ -14,6 +14,7 @@ class Form extends Component {
     this.addEduc = this.addEduc.bind(this);
     this.addWork = this.addWork.bind(this);
     this.remove = this.remove.bind(this);
+    this.reset = this.reset.bind(this);
   }
 
   remove = (e) => {
@@ -36,6 +37,13 @@ class Form extends Component {
       default:
         break;
     }
+  };
+
+  reset = () => {
+    this.setState({
+      educ: this.state.educ.slice(this.state.educ.length),
+      works: this.state.works.slice(this.state.works.length),
+    });
   };
 
   addEduc = (e) => {
@@ -87,7 +95,7 @@ class Form extends Component {
   };
 
   render() {
-    const { handleChange, addInput } = this.props;
+    const { handleChange, addInput, resetFields } = this.props;
     return (
       <form className="form">
         <fieldset className="fullName">
@@ -144,6 +152,22 @@ class Form extends Component {
           ></textarea>
         </div>
         <div>
+          <input
+            onChange={this.props.imageHandler}
+            id="selectedImg"
+            name="image"
+            type="file"
+            accept="image/*"
+          />
+          <input
+            type="button"
+            value="Upload Picture"
+            onClick={() => {
+              document.getElementById('selectedImg').click();
+            }}
+          />
+        </div>
+        <div>
           <div className="educ">
             <label>Education</label>
             <div>{this.state.educ}</div>
@@ -171,6 +195,15 @@ class Form extends Component {
             </button>
           </div>
         </div>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            resetFields();
+            this.reset();
+          }}
+        >
+          Reset Fields
+        </button>
       </form>
     );
   }

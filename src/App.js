@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Form from './components/Form';
 import CV from './components/CV';
 import defaultUser from './defaultUser';
-import Header from './components/Header';
 import Uniqid from 'uniqid';
 import './styles/app.css';
 
@@ -14,6 +13,7 @@ class App extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.addInput = this.addInput.bind(this);
+    this.imageHandler = this.imageHandler.bind(this);
     this.removeInput = this.removeInput.bind(this);
     this.resetFields = this.resetFields.bind(this);
   }
@@ -139,10 +139,15 @@ class App extends Component {
     this.setState(defaultUser);
   };
 
+  imageHandler = (e) => {
+    this.setState({
+      image: URL.createObjectURL(e.target.files[0]),
+    });
+  };
+
   render() {
     return (
       <div className="app">
-        <Header resetFields={this.resetFields} />
         <main>
           <Form
             addInput={this.addInput}
@@ -151,6 +156,8 @@ class App extends Component {
             addEduc={this.addEduc}
             educs={this.state.educs}
             works={this.state.works}
+            imageHandler={this.imageHandler}
+            resetFields={this.resetFields}
           />
           <CV userInfo={this.state} />
         </main>
