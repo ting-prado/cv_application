@@ -5,17 +5,25 @@ const defaultUser = {
   curAddress: 'San Antonio, Texas',
   email: 'samplemail@gmail.com',
   contactNum: '09912345678',
-  desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur molestie dui tincidunt metus molestie fringilla. Curabitur at risus nisi. Morbi eu porta odio. Sed varius auctor augue, et elementum leo faucibus a. Fusce quis vulputate sem. Sed pharetra dolor ut diam maximus euismod.',
+  desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur molestie dui tincidunt metus molestie fringilla. Curabitur at risus nisi. Morbi eu porta odio.',
+  image: 'sample-icon.jpg',
   educs: [
     {
       id: 'educInitial1',
+      school: 'Hawkins Middle School',
+      location: 'Hawkins, Indiana',
+      from: 'August 2003',
+      to: 'June 2006',
+    },
+    {
+      id: 'educInitial2',
       school: 'Hawkins High School',
       location: 'Hawkins, Indiana',
       from: 'August 2006',
       to: 'June 2010',
     },
     {
-      id: 'educInitial2',
+      id: 'educInitial3',
       school: 'Harvard University',
       degree: 'Computer Science',
       location: 'Cambridge, MA',
