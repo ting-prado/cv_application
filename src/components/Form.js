@@ -1,35 +1,36 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import '../styles/form.css';
 import { ExpInput, Field, ReverseField } from './FormParts';
 
-class Form extends Component {
-  constructor(props) {
-    super(props);
+const Form = (props) => {
+  const {
+    addInput,
+    handleChange,
+    removeInput,
+    educs,
+    works,
+    imageHandler,
+    resetFields,
+  } = props;
 
-    this.state = {
-      educ: [],
-      works: [],
-    };
+  const [states, setStates] = useState({
+    educ: [],
+    works: [],
+  });
 
-    this.addEduc = this.addEduc.bind(this);
-    this.addWork = this.addWork.bind(this);
-    this.remove = this.remove.bind(this);
-    this.reset = this.reset.bind(this);
-  }
-
-  remove = (e) => {
+  const remove = (e) => {
     const parent = e.target.parentNode;
     switch (parent.name) {
       case 'educs':
-        this.setState({
-          educ: this.state.educ.filter(
-            (educObj) => educObj.props.id !== parent.id
-          ),
+        setStates({
+          ...states,
+          educ: states.educ.filter((educObj) => educObj.props.id !== parent.id),
         });
         break;
       case 'works':
-        this.setState({
-          works: this.state.works.filter(
+        setStates({
+          ...states,
+          works: states.works.filter(
             (workObj) => workObj.props.id !== parent.id
           ),
         });
@@ -39,21 +40,22 @@ class Form extends Component {
     }
   };
 
-  reset = () => {
-    this.setState({
-      educ: this.state.educ.slice(this.state.educ.length),
-      works: this.state.works.slice(this.state.works.length),
+  const reset = () => {
+    setStates({
+      educ: states.educ.slice(states.educ.length),
+      works: states.works.slice(states.works.length),
     });
   };
 
-  addEduc = (e) => {
-    const lastObj = this.props.educs[this.props.educs.length - 1];
-    this.setState({
-      educ: this.state.educ.concat(
+  const addEduc = (e) => {
+    const lastObj = educs[educs.length - 1];
+    setStates({
+      ...states,
+      educ: states.educ.concat(
         <ExpInput
           key={lastObj.id}
           id={lastObj.id}
-          handleChange={this.props.handleChange}
+          handleChange={handleChange}
           name="educs"
           names={{
             inst: 'school',
@@ -63,21 +65,21 @@ class Form extends Component {
           instInfo="Degree"
           removeInput={(e) => {
             e.preventDefault();
-            this.props.removeInput(e).then(this.remove(e));
+            removeInput(e).then(remove(e));
           }}
         />
       ),
     });
   };
 
-  addWork = (e) => {
-    const lastObj = this.props.works[this.props.works.length - 1];
+  const addWork = (e) => {
+    const lastObj = works[works.length - 1];
     this.setState({
-      works: this.state.works.concat(
+      works: states.works.concat(
         <ExpInput
           key={lastObj.id}
           id={lastObj.id}
-          handleChange={this.props.handleChange}
+          handleChange={handleChange}
           name="works"
           names={{
             inst: 'company',
@@ -87,126 +89,123 @@ class Form extends Component {
           instInfo="Position"
           removeInput={(e) => {
             e.preventDefault();
-            this.props.removeInput(e).then(this.remove(e));
+            removeInput(e).then(remove(e));
           }}
         />
       ),
     });
   };
 
-  render() {
-    const { handleChange, addInput, resetFields } = this.props;
-    return (
-      <form className="form">
-        <fieldset className="fullName">
-          <legend>Full Name</legend>
-          <ReverseField
-            handleChange={handleChange}
-            name="firstName"
-            type="text"
-            labelName="First Name"
-          />
-          <ReverseField
-            handleChange={handleChange}
-            name="lastName"
-            type="text"
-            labelName="Last Name"
-          />
-        </fieldset>
-        <div className="current">
-          <Field
-            handleChange={handleChange}
-            name="curRole"
-            type="text"
-            labelName="Current Role"
-          />
-          <Field
-            handleChange={handleChange}
-            name="curAddress"
-            type="text"
-            labelName="Current Address"
-          />
-        </div>
-        <fieldset className="contact">
-          <legend>Contact Information</legend>
-          <ReverseField
-            handleChange={handleChange}
-            name="email"
-            type="email"
-            labelName="Email Address"
-          />
-          <ReverseField
-            handleChange={handleChange}
-            name="contactNum"
-            type="number"
-            labelName="Contact Number"
-          />
-        </fieldset>
-        <div className="desc">
-          <label>Profile Description</label>
-          <textarea
-            rows="5"
-            onChange={handleChange}
-            name="desc"
-            placeholder="Profile Description"
-          ></textarea>
-        </div>
-        <div>
-          <input
-            onChange={this.props.imageHandler}
-            id="selectedImg"
-            name="image"
-            type="file"
-            accept="image/*"
-          />
-          <input
-            type="button"
-            value="Upload Picture"
-            onClick={() => {
-              document.getElementById('selectedImg').click();
-            }}
-          />
-        </div>
-        <div>
-          <div className="educ">
-            <label>Education</label>
-            <div>{this.state.educ}</div>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                addInput(e).then(this.addEduc);
-              }}
-              name="educs"
-            >
-              Add Education
-            </button>
-          </div>
-          <div className="works">
-            <label>Work Experience</label>
-            <div>{this.state.works}</div>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                addInput(e).then(this.addWork);
-              }}
-              name="works"
-            >
-              Add Work Experience
-            </button>
-          </div>
-        </div>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            resetFields();
-            this.reset();
+  return (
+    <form className="form">
+      <fieldset className="fullName">
+        <legend>Full Name</legend>
+        <ReverseField
+          handleChange={handleChange}
+          name="firstName"
+          type="text"
+          labelName="First Name"
+        />
+        <ReverseField
+          handleChange={handleChange}
+          name="lastName"
+          type="text"
+          labelName="Last Name"
+        />
+      </fieldset>
+      <div className="current">
+        <Field
+          handleChange={handleChange}
+          name="curRole"
+          type="text"
+          labelName="Current Role"
+        />
+        <Field
+          handleChange={handleChange}
+          name="curAddress"
+          type="text"
+          labelName="Current Address"
+        />
+      </div>
+      <fieldset className="contact">
+        <legend>Contact Information</legend>
+        <ReverseField
+          handleChange={handleChange}
+          name="email"
+          type="email"
+          labelName="Email Address"
+        />
+        <ReverseField
+          handleChange={handleChange}
+          name="contactNum"
+          type="number"
+          labelName="Contact Number"
+        />
+      </fieldset>
+      <div className="desc">
+        <label>Profile Description</label>
+        <textarea
+          rows="5"
+          onChange={handleChange}
+          name="desc"
+          placeholder="Profile Description"
+        ></textarea>
+      </div>
+      <div>
+        <input
+          onChange={imageHandler}
+          id="selectedImg"
+          name="image"
+          type="file"
+          accept="image/*"
+        />
+        <input
+          type="button"
+          value="Upload Picture"
+          onClick={() => {
+            document.getElementById('selectedImg').click();
           }}
-        >
-          Reset Fields
-        </button>
-      </form>
-    );
-  }
-}
-
+        />
+      </div>
+      <div>
+        <div className="educ">
+          <label>Education</label>
+          <div>{states.educ}</div>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              addInput(e);
+              addEduc(e);
+            }}
+            name="educs"
+          >
+            Add Education
+          </button>
+        </div>
+        <div className="works">
+          <label>Work Experience</label>
+          <div>{states.works}</div>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              addInput(e).then(addWork(e));
+            }}
+            name="works"
+          >
+            Add Work Experience
+          </button>
+        </div>
+      </div>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          resetFields();
+          reset();
+        }}
+      >
+        Reset Fields
+      </button>
+    </form>
+  );
+};
 export default Form;
