@@ -49,10 +49,6 @@ const defaultUser = {
       to: 'April 2022',
     },
   ],
-  count: {
-    educs: 0,
-    works: 0,
-  },
 };
 
 export default defaultUser;
