@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Form from './components/Form';
 import CV from './components/CV';
 import defaultUser from './defaultUser';
@@ -12,7 +12,6 @@ const App = () => {
     const parent = e.target.parentNode.parentNode;
     switch (parent.name) {
       case 'educs':
-        console.log(parent.id);
         // to change educs state, create a new array using map
         // see if the current educ object has the same id as the parent component
         // if true, change the value of the property within that object
@@ -46,7 +45,8 @@ const App = () => {
     }
   };
 
-  const addInput = async (e) => {
+  const addInput = (e) => {
+    e.preventDefault();
     switch (e.target.name) {
       case 'educs':
         const newEduc = {
@@ -57,26 +57,9 @@ const App = () => {
           from: '',
           to: '',
         };
-        setUserInfo((prevUserInfo) => {
-          if (prevUserInfo.count.educs === 0) {
-            return {
-              ...userInfo,
-              educs: [].concat(newEduc),
-              count: {
-                ...prevUserInfo.count,
-                educs: prevUserInfo.count.educs + 1,
-              },
-            };
-          } else {
-            return {
-              ...userInfo,
-              educs: prevUserInfo.educs.concat(newEduc),
-              count: {
-                ...prevUserInfo.count,
-                educs: prevUserInfo.count.educs + 1,
-              },
-            };
-          }
+        setUserInfo({
+          ...userInfo,
+          educs: userInfo.educs.concat(newEduc),
         });
         break;
       case 'works':
@@ -88,23 +71,9 @@ const App = () => {
           from: '',
           to: '',
         };
-        if (userInfo.count.works === 0) {
-          setUserInfo({
-            ...userInfo,
-            works: [].concat(newWork),
-            count: {
-              ...userInfo.count,
-              works: userInfo.count.works + 1,
-            },
-          });
-          break;
-        }
         setUserInfo({
-          works: userInfo.works.concat(newWork),
-          count: {
-            ...userInfo.count,
-            works: userInfo.count.works + 1,
-          },
+          ...userInfo,
+          works: [].concat(newWork),
         });
         break;
       default:

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/form.css';
 import { ExpInput, Field, ReverseField } from './FormParts';
 
@@ -18,28 +18,6 @@ const Form = (props) => {
     works: [],
   });
 
-  const remove = (e) => {
-    const parent = e.target.parentNode;
-    switch (parent.name) {
-      case 'educs':
-        setStates({
-          ...states,
-          educ: states.educ.filter((educObj) => educObj.props.id !== parent.id),
-        });
-        break;
-      case 'works':
-        setStates({
-          ...states,
-          works: states.works.filter(
-            (workObj) => workObj.props.id !== parent.id
-          ),
-        });
-        break;
-      default:
-        break;
-    }
-  };
-
   const reset = () => {
     setStates({
       educ: states.educ.slice(states.educ.length),
@@ -47,54 +25,74 @@ const Form = (props) => {
     });
   };
 
-  const addEduc = (e) => {
-    const lastObj = educs[educs.length - 1];
-    setStates({
-      ...states,
-      educ: states.educ.concat(
-        <ExpInput
-          key={lastObj.id}
-          id={lastObj.id}
-          handleChange={handleChange}
-          name="educs"
-          names={{
-            inst: 'school',
-            instInfo: 'degree',
-          }}
-          institution="School/University"
-          instInfo="Degree"
-          removeInput={(e) => {
-            e.preventDefault();
-            removeInput(e).then(remove(e));
-          }}
-        />
-      ),
-    });
-  };
+  useEffect(() => {
+    const remove = (e) => {
+      const parent = e.target.parentNode;
+      switch (parent.name) {
+        case 'educs':
+          setStates({
+            ...states,
+            educ: states.educ.filter(
+              (educObj) => educObj.props.id !== parent.id
+            ),
+          });
+          break;
+        case 'works':
+          setStates({
+            ...states,
+            works: states.works.filter(
+              (workObj) => workObj.props.id !== parent.id
+            ),
+          });
+          break;
+        default:
+          break;
+      }
+    };
 
-  const addWork = (e) => {
-    const lastObj = works[works.length - 1];
-    this.setState({
-      works: states.works.concat(
-        <ExpInput
-          key={lastObj.id}
-          id={lastObj.id}
-          handleChange={handleChange}
-          name="works"
-          names={{
-            inst: 'company',
-            instInfo: 'position',
-          }}
-          institution="Company"
-          instInfo="Position"
-          removeInput={(e) => {
-            e.preventDefault();
-            removeInput(e).then(remove(e));
-          }}
-        />
-      ),
+    setStates({
+      educ: educs.map((educObj) => {
+        return (
+          <ExpInput
+            key={educObj.id}
+            id={educObj.id}
+            handleChange={handleChange}
+            name="educs"
+            names={{
+              inst: 'school',
+              instInfo: 'degree',
+            }}
+            institution="School/University"
+            instInfo="Degree"
+            removeInput={(e) => {
+              e.preventDefault();
+              removeInput(e).then(remove(e));
+            }}
+          />
+        );
+      }),
+      works: works.map((workObj) => {
+        return (
+          <ExpInput
+            key={workObj.id}
+            id={workObj.id}
+            handleChange={handleChange}
+            name="works"
+            names={{
+              inst: 'company',
+              instInfo: 'position',
+            }}
+            institution="Company"
+            instInfo="Position"
+            removeInput={(e) => {
+              e.preventDefault();
+              removeInput(e).then(remove(e));
+            }}
+          />
+        );
+      }),
     });
-  };
+  }, [educs, works, states, handleChange, removeInput]);
 
   return (
     <form className="form">
@@ -171,27 +169,14 @@ const Form = (props) => {
         <div className="educ">
           <label>Education</label>
           <div>{states.educ}</div>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              addInput(e);
-              addEduc(e);
-            }}
-            name="educs"
-          >
+          <button onClick={addInput} name="educs">
             Add Education
           </button>
         </div>
         <div className="works">
           <label>Work Experience</label>
           <div>{states.works}</div>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              addInput(e).then(addWork(e));
-            }}
-            name="works"
-          >
+          <button onClick={addInput} name="works">
             Add Work Experience
           </button>
         </div>
