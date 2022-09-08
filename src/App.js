@@ -81,7 +81,8 @@ const App = () => {
     }
   };
 
-  const removeInput = async (e) => {
+  const removeInput = (e) => {
+    e.preventDefault();
     const parent = e.target.parentNode;
     switch (parent.name) {
       case 'educs':

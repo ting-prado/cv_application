@@ -26,30 +26,6 @@ const Form = (props) => {
   };
 
   useEffect(() => {
-    const remove = (e) => {
-      const parent = e.target.parentNode;
-      switch (parent.name) {
-        case 'educs':
-          setStates({
-            ...states,
-            educ: states.educ.filter(
-              (educObj) => educObj.props.id !== parent.id
-            ),
-          });
-          break;
-        case 'works':
-          setStates({
-            ...states,
-            works: states.works.filter(
-              (workObj) => workObj.props.id !== parent.id
-            ),
-          });
-          break;
-        default:
-          break;
-      }
-    };
-
     setStates({
       educ: educs.map((educObj) => {
         return (
@@ -64,10 +40,7 @@ const Form = (props) => {
             }}
             institution="School/University"
             instInfo="Degree"
-            removeInput={(e) => {
-              e.preventDefault();
-              removeInput(e).then(remove(e));
-            }}
+            removeInput={removeInput}
           />
         );
       }),
@@ -84,10 +57,7 @@ const Form = (props) => {
             }}
             institution="Company"
             instInfo="Position"
-            removeInput={(e) => {
-              e.preventDefault();
-              removeInput(e).then(remove(e));
-            }}
+            removeInput={removeInput}
           />
         );
       }),
