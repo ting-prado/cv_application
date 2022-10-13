@@ -73,7 +73,7 @@ const App = () => {
         };
         setUserInfo({
           ...userInfo,
-          works: [].concat(newWork),
+          works: userInfo.works.concat(newWork),
         });
         break;
       default:
